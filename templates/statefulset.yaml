@@ -26,9 +26,15 @@ spec:
          name: pgsql
        env:
        - name: POSTGRES_PASSWORD
-         value: fastapi
+         valueFrom:
+           secretKeyRef:
+             name: db-creds
+             key: password
        - name: POSTGRES_USER
-         value: fastapi
+         valueFrom:
+           secretKeyRef:
+             name: db-creds
+             key: user
        - name: POSTGRES_DB
          value: fastapi
      volumes:
