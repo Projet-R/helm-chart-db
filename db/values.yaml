@@ -1,0 +1,16 @@
+# Default values for db.
+
+statefulset:
+  image: postgres:15-alpine
+  imagePullPolicy: IfNotPresent
+  port: 5432
+
+service:
+  type: ClusterIP
+  port: 5432
+  targetPort: 5432
+
+pvc:
+  accessMode: ReadWriteOnce
+  storage: 5Gi
+  storageClassName: gp2

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+ name: db
+ labels:
+    app: {{ .Release.Name }}-db
+spec:
+ selector:
+   matchLabels:
+     app: {{ .Release.Name }}-db
+ template:
+   metadata:
+     labels:
+       app: {{ .Release.Name }}-db
+   spec:
+     containers:
+     - name: {{ .Release.Name }}-db
+       image: {{ .Values.statefulset.image }}
+       imagePullPolicy: {{ .Values.statefulset.imagePullPolicy }}
+       volumeMounts:
+         - name: db-volume 
+           mountPath: /var/lib/postgresql/data
+           subPath: pgadata
+       ports:
+       - containerPort: {{ .Values.statefulset.port }}
+         name: pgsql
+       env:
+       - name: POSTGRES_PASSWORD
+         value: fastapi
+       - name: POSTGRES_USER
+         value: fastapi
+       - name: POSTGRES_DB
+         value: fastapi
+     volumes:
+      - name: db-volume 
+        persistentVolumeClaim:
+          claimName: {{ .Release.Name }}-pvc-db
