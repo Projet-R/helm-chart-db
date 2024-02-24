@@ -1,1 +1,1 @@
-Chart Helm pourl déploiement de la base de données sur EKS
+This Github repository contains a Helm Chart to deploy our PostgreSQL DB on EKS
